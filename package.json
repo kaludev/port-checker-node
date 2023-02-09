@@ -1,0 +1,20 @@
+{
+  "name": "port-checker-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaludev/port-checker-node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaludev/port-checker-node/issues"
+  },
+  "homepage": "https://github.com/kaludev/port-checker-node#readme"
+}
