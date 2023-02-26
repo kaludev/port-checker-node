@@ -1,6 +1,6 @@
 const http = require('http');
 const url = require('url');
-const {readFileSync } = require('fs');
+const {readFileSync, createReadStream } = require('fs');
 const { join, extname } = require('path');
 const index = join(__dirname,'index.html');
 const server = http.createServer(async (req, res) => {
@@ -46,7 +46,7 @@ const server = http.createServer(async (req, res) => {
         }
         console.log(mimetype,extname(path.substring(1,path.length)))
         res.writeHead(200, { 'Content-Type': `${mimetype}` });
-        res.write(readFileSync(join(__dirname,path)));
+        createReadStream(join(__dirname,path)).pipe(res);
         res.end();
       }catch(e){
         res.writeHead(404, { 'Content-Type': 'text/plain' });
