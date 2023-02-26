@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/kaludev/port-checker-node/issues"
   },
-  "homepage": "https://github.com/kaludev/port-checker-node#readme"
+  "homepage": "https://github.com/kaludev/port-checker-node#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "http-status-codes": "^2.2.0",
+    "is-port-reachable": "^4.0.0"
+  }
 }

@@ -1,8 +1,42 @@
 const http = require('http');
-const url = require('url');
-const {readFileSync, createReadStream } = require('fs');
-const { join, extname } = require('path');
-const index = join(__dirname,'index.html');
+const express = require('express');
+const app = express();
+const { StatusCodes } = require('http-status-codes');
+require('express-async-errors');
+const BadRequestError = require('./errors/BadRequestError');
+const notFound= require('./middleware/NotFound')
+const errorHandler = require('./middleware/errorHandler');
+const { default: isPortReachable } = require('is-port-reachable');
+
+app.use(express.static('public'));
+app.use(express.json());
+
+const server = http.createServer(app);
+
+app.get('/getip', async (req, res)=>{
+  res.status(StatusCodes.OK).json({ok: true,ip:req.headers['x-forwarded-for'] || req.socket.remoteAddress.substring(7)});
+  res.end();
+})
+
+app.post('/checkport', async(req, res)=>{
+    if(!req.body.port){
+      throw new BadRequestError('port must be specified');
+    }
+    if(!req.body.ip){
+      throw new BadRequestError('ip must be specified');
+    }
+    const port = req.body.port;
+    const ip = req.body.ip;
+    res.status(StatusCodes.OK).json({ok:true,isOpen: await isPortReachable(port,{host:ip}) }) 
+})
+
+app.use(notFound);
+app.use(errorHandler);
+
+server.listen(PORT,() =>{
+  console.log(`app slusa na portu ${PORT}`)
+})
+/*
 const server = http.createServer(async (req, res) => {
   const reqUrl = url.parse(req.url, true);
   const path = reqUrl.pathname;
@@ -59,4 +93,4 @@ const server = http.createServer(async (req, res) => {
 const port = process.env.PORT || 1035;
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
-});
+});*/
