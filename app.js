@@ -6,7 +6,8 @@ require('express-async-errors');
 const BadRequestError = require('./errors/BadRequestError');
 const notFound= require('./middleware/NotFound')
 const errorHandler = require('./middleware/errorHandler');
-const { default: isPortReachable } = require('is-port-reachable');
+const nodePortScanner = require('node-port-scanner');
+const { writeFileSync, readFileSync } = require('fs');
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -19,19 +20,39 @@ app.get('/getip', async (req, res)=>{
 })
 
 app.post('/checkport', async(req, res)=>{
-    if(!req.body.port){
+  const port = req.body.port;
+    const ip = req.body.ip;
+    
+    if(!port){
       throw new BadRequestError('port must be specified');
     }
-    if(!req.body.ip){
+    if(!ip){
       throw new BadRequestError('ip must be specified');
     }
-    const port = req.body.port;
-    const ip = req.body.ip;
-    res.status(StatusCodes.OK).json({ok:true,isOpen: await isPortReachable(port,{host:ip}) }) 
+    console.log('Checking port: ' + port + ' on ' + ip);
+    const openPorts = await nodePortScanner(ip,[Number(port)]);
+    const isOpen = openPorts.ports.open.length != 0;
+    res.status(StatusCodes.OK).json({ok:true,isOpen: isOpen});
+    let contains = readFileSync('./data/checked.txt',"utf8").split("\n");
+    let data = `${ip}:${port} is ${isOpen ? 'open' : 'closed'}\n`;
+    for(let i = 0;i<4;i++){
+      data += contains[i];
+    }
+    writeFileSync('./data/checked.txt', data);
+})
+
+app.get('/lastChecked', async (req, res) => {
+  let contains = readFileSync('./data/checked.txt',"utf8").split("\n");
+  res.status(StatusCodes.OK).json({
+    ok:true,
+    data:contains
+  })
 })
 
 app.use(notFound);
 app.use(errorHandler);
+
+const PORT  = process.env.PORT || 1035;
 
 server.listen(PORT,() =>{
   console.log(`app slusa na portu ${PORT}`)

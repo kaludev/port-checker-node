@@ -14,11 +14,16 @@ document.querySelector('#check').addEventListener('submit', async (e) => {
     e.preventDefault();
     const port = document.querySelector('.fieldPn').value; 
     const ip = document.querySelector('.fieldIp').value;
+    const body = {
+        port: port,
+        ip: ip
+    }
     const res = await fetch("http://84.46.246.159:1035/checkport",{
-        body:{
-            port: port,
-            ip: ip
-        }
+        method :"POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify(body)
     });
     const data = await res.json();
     if(!data.ok){
@@ -26,6 +31,8 @@ document.querySelector('#check').addEventListener('submit', async (e) => {
     }
     if(data.isOpen){
         output.textContent = `port ${port} on host ${ip} is open`; 
+    }else{
+        output.textContent = `port ${port} on host ${ip} is not open`; 
     }
 
 })
