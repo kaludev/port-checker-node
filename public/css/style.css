@@ -69,7 +69,6 @@ section{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    justify-content: space-around;
     position: relative;
     height: fit-content;
     width: fit-content;
@@ -78,7 +77,7 @@ section{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
+    width: 40vw;
 }
 .mainText .title{
     font-size: 72px;
@@ -101,7 +100,8 @@ section{
 }
 .mainImg{
     height: 750px;
-    width: 50%;
+    width: 50vw;
+    margin: 10px;
     background-image: url(../images/img1.svg);
     background-position: center;
     background-size: contain;
@@ -250,11 +250,13 @@ footer .social{
     .mainText, .mainImg{
         width: 100%;
     }
-    .title{
+    .mainText .title{
         padding: 20px;
+        text-align: center;
     }
-    .desc{
+    .mainText .desc{
         margin-left: 20px;
+        text-align: center;
     }
     form{
         justify-content: center;
