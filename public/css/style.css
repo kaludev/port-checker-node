@@ -4,6 +4,7 @@
     padding: 0;
     font-family: 'Nunito Sans', sans-serif;
     scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 body{
     overflow-x: hidden;
@@ -22,8 +23,8 @@ nav{
     font-family: 'Nunito Sans', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    min-width: 1280px;
-    width: fit-content;
+    width: 1280px;
+    min-width: fit-content;
     height: 50px;
     padding-top: 10px;
 }
@@ -49,7 +50,7 @@ nav a{
     min-height: 30px;
     min-width: 30px;
     padding-top: 15px;
-    background-image: url(/images/logo.svg);
+    background-image: url(../images/logo.svg);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -66,9 +67,10 @@ main{
 section{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     justify-content: space-around;
     position: relative;
-    min-width: 1280px;
     height: fit-content;
     width: fit-content;
 }
@@ -100,9 +102,10 @@ section{
 .mainImg{
     height: 750px;
     width: 50%;
-    background-image: url(/images/img1.svg);
+    background-image: url(../images/img1.svg);
     background-position: center;
     background-size: contain;
+    background-repeat: no-repeat;
 }
 .info{
     display: flex;
@@ -133,14 +136,18 @@ section{
     padding: 20px;
     color: #fff;
 }
-.checker{
-    align-items: center;
-}
 .checker .mainImg{
-    background-image: url(/images/info2.svg);
+    background-image: url(../images/info2.svg);
+}
+form{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: auto;
 }
 input[type="text"]{
     margin: 20px;
+    margin-left: 0px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
@@ -160,9 +167,6 @@ input[type="submit"]{
     color: #fff;
     font-weight: bold;
     cursor: pointer;
-}
-.fieldIp{
-    margin-left: 0 !important; 
 }
 footer{
     width: 100vw;
@@ -232,4 +236,54 @@ footer .social{
 .copyright a{
     color: #fff;
     text-decoration: none;
+}
+@media only screen and (max-width: 1200px) {
+    .mainImg{
+        height: 550px;
+    }
+    section{
+        flex-direction: column;
+    }
+    nav{
+        padding-left: 20px;
+    }
+    .mainText, .mainImg{
+        width: 100%;
+    }
+    .title{
+        padding: 20px;
+    }
+    .desc{
+        margin-left: 20px;
+    }
+    form{
+        justify-content: center;
+    }
+    .info{
+        width: 100%;
+        flex-direction: column;
+    }
+    .infoSec{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;    
+    }
+}
+@media only screen and (max-width: 992px) {
+
+}
+@media only screen and (max-width: 768px) {
+    form{
+        flex-direction: column;
+        justify-content: center;
+    }
+    .footerLinks{
+        flex-direction: column;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .title{
+        font-size: 48px;
+    }
 }
