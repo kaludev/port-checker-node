@@ -1,5 +1,5 @@
 const getIp = async () =>{
-    const res = await fetch("http://84.46.246.159:1035/getip");
+    const res = await fetch("/getip");
     const data = await res.json();
     if(!data.ok){
         alert("Error");
@@ -18,7 +18,7 @@ document.querySelector('#check').addEventListener('submit', async (e) => {
         port: port,
         ip: ip
     }
-    const res = await fetch("http://84.46.246.159:1035/checkport",{
+    const res = await fetch("/checkport",{
         method :"POST",
         headers: {
             "Content-Type": "application/json"
